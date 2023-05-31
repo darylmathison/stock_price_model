@@ -31,15 +31,13 @@ def main():
 
     x_training_data, x_verify, y_training_data, y_verify = train_test_split(x, y, train_size=0.8, shuffle=False)
     x_train, x_test, y_train, y_test = train_test_split(x_training_data, y_training_data, train_size=0.9, shuffle=False)
-    print(x[-1], y[-1])
-    exit(0)
+
     best_model = evaluate_models(x_train, y_train, DecisionTreeRegressor())
     print(best_model.score(x_test, y_test))
     print(best_model.score(x_verify, y_verify))
 
-    print(x[-1])
-    # with open('../data/stock_model.pickle', 'wb') as model_file:
-    #     pickle.dump(best_model, model_file)
+    with open('../data/stock_model.pickle', 'wb') as model_file:
+        pickle.dump(best_model, model_file)
 
 
 if __name__ == '__main__':
