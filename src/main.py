@@ -1,22 +1,20 @@
-from fastapi import FastAPI
 import pickle
 import numpy as np
-
-app = FastAPI()
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+import json
 
 
-@app.get("/predict/{yesterday_close}")
-async def prediction(yesterday_close: float):
-    with open('data/stock_model.pickle', 'rb') as model_file:
+def handle(event, context):
+    with open('./stock_model.pickle', 'rb') as model_file:
         model = pickle.load(model_file)
 
+    print("I am here")
+    yesterday_close = float(event['yesterday_close'])
     x = np.array([yesterday_close])
-    p = str(model.predict(x.reshape((1, 1))))
-    return {"close": p}
+
+    p = model.predict(x.reshape((1, 1)))
+    p = "{:.2f}".format(p[0])
+    return {"close": float(p)}
 
 
+if __name__ == '__main__':
+    handle({"yesterday_close": "13.48"}, None)
