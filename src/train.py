@@ -29,8 +29,8 @@ def main():
     pipeline = create_pipeline("Close")
     x, y = pipeline.fit_transform(cane)
 
-    x_training_data, x_verify, y_training_data, y_verify = train_test_split(x, y, train_size=0.8, shuffle=False)
-    x_train, x_test, y_train, y_test = train_test_split(x_training_data, y_training_data, train_size=0.9, shuffle=False)
+    x_training_data, x_verify, y_training_data, y_verify = train_test_split(x, y, train_size=0.8, shuffle=True)
+    x_train, x_test, y_train, y_test = train_test_split(x_training_data, y_training_data, train_size=0.9, shuffle=True)
 
     best_model = evaluate_models(x_train, y_train, DecisionTreeRegressor())
     print(best_model.score(x_test, y_test))
