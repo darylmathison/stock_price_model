@@ -33,4 +33,4 @@ jobs:
           echo "image=${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}"
       - name: Redeploy Lambda
         run: |
-          aws lambda update-function-code --image-uri ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          aws lambda update-function-code --function-name app-cane-model --image-uri ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
