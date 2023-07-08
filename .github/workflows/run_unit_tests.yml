@@ -1,0 +1,14 @@
+name: Unit tests
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile_for_tests --tag bot-utest
+    - name: Run the tests
+      run: docker run -t bot-utest pytest test

@@ -1,0 +1,12 @@
+FROM amazon/aws-lambda-python:latest
+LABEL authors="darylmathison"
+
+COPY requirements.txt .
+RUN mkdir -p ./test && pip3 install -r requirements.txt  && \
+    pip3 install pytest flake8
+COPY data/stock_model.pickle ${LAMBDA_TASK_ROOT}
+COPY src/main.py ${LAMBDA_TASK_ROOT}
+COPY test ${LAMBDA_TASK_ROOT}/test
+
+WORKDIR ${LAMBDA_TASK_ROOT}
+ENTRYPOINT [ "" ]
