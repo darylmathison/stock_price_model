@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 def percent_difference(value1, value2):
     numerator = abs(value1 - value2)
     denominator = value2
-    return numerator/denominator * 100
+    return float("{:.2f}".format(numerator/denominator * 100))
 
 
 def date_range():
@@ -32,17 +32,20 @@ def find_two_prior_closes(stock_symbol):
     start_day, end_day = date_range()
     history = ticker.history(start=start_day, end=end_day)
     close = history.filter(["Close"])
-    return close.to_numpy()
+    return list(float("{:.2f}".format(p[0])) for p in close.to_numpy().tolist())
 
 
 def test_model(stock_symbol):
     closes = find_two_prior_closes(stock_symbol)
 
     predicted_close = get_predicted_value(closes[0])
-    actual_close = float(closes[1])
+    actual_close = closes[1]
     percent_diff = percent_difference(predicted_close, actual_close)
-    logger.info("predicted close: %s; actual close: %s; percent difference %s",
+    logger.info("predicted close: %s; actual close: %s; percent difference: %s",
                 predicted_close, actual_close, percent_diff)
+    return {"predicted_close": predicted_close,
+            "actual_close": actual_close,
+            "percent_diff": percent_diff}
 
 
 def get_predicted_value(input_value):
@@ -79,8 +82,7 @@ def handle(event, context):
 
         return {"close": close}
     else:
-        test_model('CANE')
-        return "OK"
+        return test_model('CANE')
 
 
 if __name__ == '__main__':
