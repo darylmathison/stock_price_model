@@ -1,5 +1,5 @@
 import pickle
-
+import os
 import business_calendar
 import numpy as np
 import yfinance
@@ -31,14 +31,12 @@ def find_two_prior_closes(stock_symbol):
     ticker = yfinance.Ticker(stock_symbol)
     start_day, end_day = date_range()
     history = ticker.history(start=start_day, end=end_day)
-    print(history.info)
     close = history.filter(["Close"])
     return close.to_numpy()
 
 
 def test_model(stock_symbol):
     closes = find_two_prior_closes(stock_symbol)
-    print(closes)
 
     predicted_close = get_predicted_value(closes[0])
     actual_close = float(closes[1])
@@ -57,11 +55,27 @@ def get_predicted_value(input_value):
     return float(p)
 
 
+log_levels = {
+    "CRITICAL": logging.CRITICAL,
+    "ERROR": logging.ERROR,
+    "WARNING": logging.WARNING,
+    "INFO": logging.INFO,
+    "DEBUG": logging.DEBUG,
+    "NOTSET": logging.NOTSET
+}
+
+try:
+    LOGGING_LEVEL = os.environ['LOGGING_LEVEL']
+except KeyError as ke:
+    LOGGING_LEVEL = "INFO"
+
+
 def handle(event, context):
+    logging.getLogger().setLevel(log_levels[LOGGING_LEVEL])
 
     if "yesterday_close" in event:
         close = get_predicted_value(event['yesterday_close'])
-        logger.info("Today's predicted close is %s with yesterday's close", close, event['yesterday_close'])
+        logger.info("Today's predicted close is %s with yesterday's close %s", close, event['yesterday_close'])
 
         return {"close": close}
     else:
