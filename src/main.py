@@ -13,18 +13,23 @@ logger = logging.getLogger(__name__)
 def percent_difference(value1, value2):
     numerator = abs(value1 - value2)
     denominator = value2
-    return float("{:.2f}".format(numerator/denominator * 100))
+    return float("{:.2f}".format(numerator / denominator * 100))
 
 
 def date_range():
-    calendar = business_calendar.Calendar(workdays=[MO, TU, WE, TH, FR])
-    end_day = datetime.datetime.today()
     day_delta = datetime.timedelta(days=1)
 
-    while not calendar.isworkday(end_day):
-        end_day = end_day - day_delta
+    def find_first_prior_market_day(base_date: datetime.datetime):
+        market_day = datetime.datetime(year=base_date.year, month=base_date.month, day=base_date.day)
 
-    return (end_day - day_delta), end_day
+        while not calendar.isworkday(market_day):
+            market_day = market_day - day_delta
+        return market_day
+
+    calendar = business_calendar.Calendar(workdays=[MO, TU, WE, TH, FR])
+    end_day = find_first_prior_market_day(datetime.datetime.today())
+    start_day = find_first_prior_market_day(end_day - day_delta)
+    return start_day, end_day
 
 
 def find_two_prior_closes(stock_symbol):
