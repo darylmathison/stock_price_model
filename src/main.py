@@ -6,6 +6,7 @@ import yfinance
 import logging
 from business_calendar import MO, TU, WE, TH, FR
 import datetime
+import pytz
 
 logger = logging.getLogger(__name__)
 
@@ -13,18 +14,16 @@ logger = logging.getLogger(__name__)
 def percent_difference(value1, value2):
     numerator = abs(value1 - value2)
     denominator = value2
-    return float("{:.2f}".format(numerator/denominator * 100))
+    return float("{:.2f}".format(numerator / denominator * 100))
 
 
 def date_range():
-    calendar = business_calendar.Calendar(workdays=[MO, TU, WE, TH, FR])
-    end_day = datetime.datetime.today()
     day_delta = datetime.timedelta(days=1)
-
-    while not calendar.isworkday(end_day):
-        end_day = end_day - day_delta
-
-    return (end_day - day_delta), end_day
+    calendar = business_calendar.Calendar()
+    base_day = datetime.datetime.now(pytz.timezone("US/Eastern"))
+    end_day = calendar.adjust(base_day, business_calendar.PREVIOUS)
+    start_day = calendar.adjust((end_day - day_delta), business_calendar.PREVIOUS)
+    return start_day, end_day
 
 
 def find_two_prior_closes(stock_symbol):
