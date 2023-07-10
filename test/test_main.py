@@ -31,6 +31,7 @@ class TestMain(unittest.TestCase):
 
     def test_date_range(self):
         _range = main.date_range()
+        print(_range)
         self.assertEqual(2, len(_range))
 
 

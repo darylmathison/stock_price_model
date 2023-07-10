@@ -6,6 +6,7 @@ import yfinance
 import logging
 from business_calendar import MO, TU, WE, TH, FR
 import datetime
+import pytz
 
 logger = logging.getLogger(__name__)
 
@@ -18,17 +19,10 @@ def percent_difference(value1, value2):
 
 def date_range():
     day_delta = datetime.timedelta(days=1)
-
-    def find_first_prior_market_day(base_date: datetime.datetime):
-        market_day = datetime.datetime(year=base_date.year, month=base_date.month, day=base_date.day)
-
-        while not calendar.isworkday(market_day):
-            market_day = market_day - day_delta
-        return market_day
-
-    calendar = business_calendar.Calendar(workdays=[MO, TU, WE, TH, FR])
-    end_day = find_first_prior_market_day(datetime.datetime.today())
-    start_day = find_first_prior_market_day(end_day - day_delta)
+    calendar = business_calendar.Calendar()
+    base_day = datetime.datetime.now(pytz.timezone("US/Eastern"))
+    end_day = calendar.adjust(base_day, business_calendar.PREVIOUS)
+    start_day = calendar.adjust((end_day - day_delta), business_calendar.PREVIOUS)
     return start_day, end_day
 
 
