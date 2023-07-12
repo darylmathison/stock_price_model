@@ -4,6 +4,7 @@ from sklearn.tree import DecisionTreeRegressor
 import matplotlib.pyplot as plt
 from pipeline import create_pipeline
 import pickle
+import yfinance
 
 plt.style.use('fivethirtyeight')
 
@@ -25,7 +26,7 @@ def evaluate_models(x, y, model):
 
 
 def main():
-    cane = pd.read_csv('../data/CANE.csv', index_col=0)
+    cane = yfinance.download("CANE", period='MAX', interval="1d", repair=True)
     pipeline = create_pipeline("Close")
     x, y = pipeline.fit_transform(cane)
 
