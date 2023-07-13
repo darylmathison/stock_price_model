@@ -10,4 +10,4 @@ jobs:
       - name: pull in requirements
         run: pip3 install -r requirements.txt
       - name: Train the model
-        run: python train.py
+        run: python src/train.py
