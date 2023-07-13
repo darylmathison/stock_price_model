@@ -1,12 +1,12 @@
 import pandas as pd
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.tree import DecisionTreeRegressor
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from pipeline import create_pipeline
 import pickle
 import yfinance
 
-plt.style.use('fivethirtyeight')
+# plt.style.use('fivethirtyeight')
 
 
 def evaluate_models(x, y, model):
