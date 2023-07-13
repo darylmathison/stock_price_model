@@ -10,7 +10,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
-          ref: 'update-model'
       - name: Set git Username
         run: |
           git config user.name 'github-actions[bot]'
@@ -29,3 +28,6 @@ jobs:
         with:
           commit-message: 'update the model ${{ steps.date.outputs.date }}'
           branch: 'update-model'
+          base: 'main'
+          body: 'updating of the model ${{ steps.date.outputs.date }}'
+          title: 'Model Update ${{ steps.date.outputs.date }}'
