@@ -35,5 +35,5 @@ jobs:
           git commit -a -m'update the model ${{ steps.date.outputs.date }}'
       - name: Push
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
           git push --set-upstream origin update-model-${{ steps.date.outputs.date }}
