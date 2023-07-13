@@ -9,7 +9,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
       - name: pull in requirements
         run: pip3 install -r requirements.txt
       - name: Get current date
@@ -24,5 +24,6 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git commit -a -m'update the model ${{ steps.date.outputs.date }}'
-      - name: Push-Action
-        uses: Minionguyjpro/Push-Action@1.0.0
+      - name: Push
+        run: |
+          git push
