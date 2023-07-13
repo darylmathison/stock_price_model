@@ -25,7 +25,7 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Create a branch
-        run: git checkout -b update-model-${{ steps.date.outputs.date }}
+        run: git checkout update-model
       - name: Train the model
         run: python src/train.py
       - name: Add, Commit
@@ -36,4 +36,4 @@ jobs:
       - name: Push
         run: |
           git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
-          git push --set-upstream origin update-model-${{ steps.date.outputs.date }}
+          git push --set-upstream origin update-model
