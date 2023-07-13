@@ -30,8 +30,10 @@ jobs:
         run: python src/train.py
       - name: Add, Commit
         run: |
-          git config --global user.email "${{ vars.email }}"
-          git config --global user.name "${{ vars.name }}"
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
           git commit -a -m'update the model ${{ steps.date.outputs.date }}'
       - name: Push
-        run: git push --set-upstream origin update-model-${{ steps.date.outputs.date }}
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push --set-upstream origin update-model-${{ steps.date.outputs.date }}
