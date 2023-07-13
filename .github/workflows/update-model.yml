@@ -22,4 +22,4 @@ jobs:
           git config --global user.name "${{ vars.name }}"
           git commit -a -m'update the model ${{ steps.date.outputs.date }}'
       - name: Push
-        run: git push
+        run: git push --set-upstream origin update-model-${{ steps.date.outputs.date }}
