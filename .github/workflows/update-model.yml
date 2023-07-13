@@ -2,9 +2,6 @@ name: Update Model
 
 on: workflow_dispatch
 
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -29,5 +26,5 @@ jobs:
           git commit -a -m'update the model ${{ steps.date.outputs.date }}'
       - name: Push
         run: |
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://darylmathison:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
           git push origin update-model
