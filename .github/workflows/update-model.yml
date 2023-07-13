@@ -11,18 +11,19 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           ref: 'update-model'
-      - name: pull in requirements
-        run: pip3 install -r requirements.txt
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-      - name: Train the model
-        run: python src/train.py
-      - name: Add, Commit
+      - name: Set git Username
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git commit -a -m'update the model ${{ steps.date.outputs.date }}'
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: pull in requirements
+        run: pip3 install -r requirements.txt
+      - name: Train the model
+        run: python src/train.py
+      - name: Add, Commit
+        run: git commit -a -m'update the model ${{ steps.date.outputs.date }}'
       - name: Push
         run: |
           git push
