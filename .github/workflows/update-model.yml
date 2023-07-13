@@ -16,5 +16,10 @@ jobs:
         run: git checkout -b update-model-${{ steps.date.outputs.date }}
       - name: Train the model
         run: python src/train.py
-      - name: Add & Commit
-        run: git commit -a -m'update the model ${{ steps.date.outputs.date }}'
+      - name: Add, Commit
+        run: |
+          git config --global user.email "${{ var.email }}"
+          git config --global user.name "${{ var.name }}"
+          git commit -a -m'update the model ${{ steps.date.outputs.date }}'
+      - name: Push
+        run: git push
