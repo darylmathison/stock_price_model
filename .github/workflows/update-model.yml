@@ -24,6 +24,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git commit -a -m'update the model ${{ steps.date.outputs.date }}'
-      - name: Push
-        run: |
-          git push --repo https://darylmathison:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+      - name: Push-Action
+        uses: Minionguyjpro/Push-Action@1.0.0
