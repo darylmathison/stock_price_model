@@ -37,7 +37,7 @@ def main():
     print(best_model.score(x_test, y_test))
     print(best_model.score(x_verify, y_verify))
 
-    with open('../data/stock_model.pickle', 'wb') as model_file:
+    with open('./data/stock_model.pickle', 'wb') as model_file:
         pickle.dump(best_model, model_file)
 
 
