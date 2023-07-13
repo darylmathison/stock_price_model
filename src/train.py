@@ -1,12 +1,10 @@
 import pandas as pd
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.tree import DecisionTreeRegressor
-import matplotlib.pyplot as plt
 from pipeline import create_pipeline
 import pickle
 import yfinance
 
-plt.style.use('fivethirtyeight')
 
 
 def evaluate_models(x, y, model):
@@ -37,7 +35,7 @@ def main():
     print(best_model.score(x_test, y_test))
     print(best_model.score(x_verify, y_verify))
 
-    with open('../data/stock_model.pickle', 'wb') as model_file:
+    with open('./data/stock_model.pickle', 'wb') as model_file:
         pickle.dump(best_model, model_file)
 
 
