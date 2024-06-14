@@ -25,7 +25,7 @@ jobs:
           docker build -t ${{ vars.ECR_REPOSITORY }}  .
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
       - name: Export to AWS
         run: |
           docker tag ${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
