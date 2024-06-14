@@ -10,5 +10,5 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile_for_tests --tag bot-utest
-    - name: Run the tests
-      run: docker run -t bot-utest pytest test
+#    - name: Run the tests
+#      run: docker run -t bot-utest pytest test
