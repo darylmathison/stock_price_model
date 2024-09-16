@@ -9,7 +9,7 @@ cryptography==42.0.8
 cycler==0.12.1
 frozendict==2.4.4
 html5lib==1.1
-idna==3.7
+idna==3.10
 kiwisolver==1.4.5
 lxml==5.2.2
 multitasking==0.0.11
