@@ -1,7 +1,7 @@
 appdirs==1.4.4
 beautifulsoup4==4.12.3
 business-calendar==0.2.1
-certifi==2024.6.2
+certifi==2025.1.31
 cffi==1.17.1
 charset-normalizer==3.3.2
 contourpy==1.2.1
